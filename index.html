@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#b62025" />
+    <meta name="description" content="Yudo 餐厅中文点餐与巴厘岛外卖订单系统" />
+    <title>Yudo 中文点餐</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="返回顶部">
+        <span class="brand-mark">魚</span>
+        <span><strong>YUDO 鱼多多</strong><small>巴厘岛川渝海鲜中餐</small></span>
+      </a>
+      <button class="cart-button" id="cartButton" type="button" aria-label="打开购物车">
+        购物车 <span id="cartCount">0</span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">中文下单 · 配送到酒店</p>
+          <h1>在巴厘岛，也能吃上一口热乎中餐</h1>
+          <p>中文菜单、辣度可选。送达前有中文客服协助沟通。</p>
+          <a class="primary-button" href="#menu">开始点餐</a>
+        </div>
+        <div class="hero-card" aria-label="今日服务信息">
+          <span>今日营业</span>
+          <strong>11:00—次日 02:00</strong>
+          <small>配送费由客服按酒店位置确认</small>
+        </div>
+      </section>
+
+      <section class="service-strip" aria-label="服务特色">
+        <div><b>中文客服</b><span>地址和骑手沟通更省心</span></div>
+        <div><b>本地鲜活海鲜</b><span>中式做法，现点现做</span></div>
+        <div><b>餐具主动配齐</b><span>儿童、老人和汤菜特别照顾</span></div>
+      </section>
+
+      <section class="menu-section" id="menu">
+        <div class="section-heading">
+          <div><p class="eyebrow">MENU</p><h2>今天想吃什么？</h2></div>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="搜索菜名" autocomplete="off" />
+          </label>
+        </div>
+        <nav class="category-tabs" id="categoryTabs" aria-label="菜品分类"></nav>
+        <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="order-help">
+        <div>
+          <p class="eyebrow">点餐提醒</p>
+          <h2>不知道辣度怎么选？</h2>
+          <p>微辣只是带点香，中辣更接近四川口味，特辣适合平时就很能吃辣的人。拿不准就先选微辣，备注里也可以告诉我们你的口味。</p>
+        </div>
+        <ol>
+          <li><span>1</span>选菜并确认辣度</li>
+          <li><span>2</span>填写酒店和联系方式</li>
+          <li><span>3</span>复制订单发给中文客服确认</li>
+        </ol>
+      </section>
+    </main>
+
+    <div class="overlay" id="overlay" hidden></div>
+    <aside class="cart-drawer" id="cartDrawer" aria-labelledby="cartTitle" aria-hidden="true">
+      <div class="drawer-header">
+        <div><p class="eyebrow">YOUR ORDER</p><h2 id="cartTitle">确认订单</h2></div>
+        <button class="icon-button" id="closeCart" type="button" aria-label="关闭购物车">×</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary">
+        <div><span>菜品小计</span><strong id="subtotal">Rp 0</strong></div>
+        <p>配送费根据酒店位置，由中文客服确认后告知。</p>
+      </div>
+
+      <form class="checkout-form" id="checkoutForm">
+        <h3>用餐与配送信息</h3>
+        <div class="field-row">
+          <label>联系人<input name="customerName" required placeholder="怎么称呼您" /></label>
+          <label>联系电话<input name="phone" required inputmode="tel" placeholder="WhatsApp / 手机号" /></label>
+        </div>
+        <label>用餐方式
+          <select name="orderType" id="orderType">
+            <option value="外卖配送">外卖配送</option>
+            <option value="到店自取">到店自取</option>
+          </select>
+        </label>
+        <label id="addressField">酒店或民宿地址<textarea name="address" rows="2" required placeholder="酒店名称、房间号或 Google Maps 定位"></textarea></label>
+        <div class="field-row">
+          <label>用餐人数<input name="people" type="number" min="1" max="30" value="2" required /></label>
+          <label>预计用餐时间<input name="deliveryTime" type="time" required /></label>
+        </div>
+        <fieldset>
+          <legend>用餐人员（可多选）</legend>
+          <label class="check"><input name="diners" type="checkbox" value="有儿童" /> 有儿童</label>
+          <label class="check"><input name="diners" type="checkbox" value="有老人" /> 有老人</label>
+          <label class="check"><input name="diners" type="checkbox" value="无特殊需求" /> 无特殊需求</label>
+        </fieldset>
+        <fieldset>
+          <legend>免费餐具</legend>
+          <label class="check"><input name="utensils" type="checkbox" value="筷子和纸巾" checked /> 筷子和纸巾</label>
+          <label class="check"><input name="utensils" type="checkbox" value="小碗和汤勺" /> 小碗和汤勺</label>
+          <label class="check"><input name="utensils" type="checkbox" value="手套和湿巾" /> 手套和湿巾</label>
+        </fieldset>
+        <label>口味或其他备注<textarea name="notes" rows="2" placeholder="例如：少油、不要香菜、骑手到后联系中文客服"></textarea></label>
+        <button class="checkout-button" type="submit">生成中文订单</button>
+      </form>
+    </aside>
+
+    <dialog class="order-dialog" id="orderDialog">
+      <button class="icon-button dialog-close" id="closeDialog" type="button" aria-label="关闭">×</button>
+      <p class="eyebrow">ORDER READY</p>
+      <h2>订单已经整理好了</h2>
+      <p>复制后发送给 Yudo 中文客服，客服会确认库存、配送费和预计送达时间。</p>
+      <pre id="orderText"></pre>
+      <button class="checkout-button" id="copyOrder" type="button">复制订单内容</button>
+      <p class="copy-status" id="copyStatus" role="status"></p>
+    </dialog>
+
+    <footer>
+      <strong>YUDO 鱼多多</strong>
+      <span>堂食 · 外卖 · 中文客服</span>
+      <small>本页面为点餐 MVP，最终价格和配送信息以客服确认为准。</small>
+    </footer>
+  </body>
+</html>
